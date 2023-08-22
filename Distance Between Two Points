@@ -1,0 +1,19 @@
+import java.util.Scanner;
+import java.lang.Math.*;
+public class Main
+{
+	public static void main(String[] args) {
+	    Scanner sc = new Scanner(System.in);
+	    
+		int x1 = 5;
+		int y1 = 6;
+		int x2 = 15;
+        int y2 = 18;
+		
+		int sq1 = (x2-x1)*(x2-x1);
+        int sq2 = (y2-y1)*(y2-y1);
+        
+        double dist = Math.sqrt(sq1 + sq2);
+        System.out.print("distance = " + dist);
+	}
+}
