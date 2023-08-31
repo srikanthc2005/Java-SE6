@@ -1,0 +1,598 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.text.DecimalFormat;
+import java.util.*;
+
+
+public class Converter
+{
+  private JFrame frame;
+  
+  public Converter()
+{
+  frame = new JFrame("Converter");
+  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  frame.getContentPane().setBackground(new Color(200, 207, 235));
+  frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+  
+  Font tf = new Font("Comic Sans MS", Font.BOLD, 36);
+  Font vf = new Font("Comfortaa", Font.PLAIN, 24);
+
+  JLabel t_label = new JLabel("Converter");
+  t_label.setFont(tf);
+  t_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+  t_label.setBorder(new EmptyBorder(20, 0, 20, 0));
+
+  JLabel v_label = new JLabel("Version 1.0");
+  v_label.setFont(vf);
+  v_label.setAlignmentX(Component.CENTER_ALIGNMENT);
+  v_label.setBorder(new EmptyBorder(0, 0, 20, 0));
+
+  JLabel creatorLabel = new JLabel("Created by Srikanth");
+  creatorLabel.setFont(vf);
+  creatorLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+  creatorLabel.setBorder(new EmptyBorder(0, 0, 20, 0));
+
+  frame.add(t_label);
+  frame.add(v_label);
+  frame.add(creatorLabel);
+  frame.setPreferredSize(new Dimension(500, 300));
+  frame.pack();
+  frame.setLocationRelativeTo(null);
+  frame.setVisible(true);
+
+  javax.swing.Timer t = new javax.swing.Timer(2000, e ->
+ {
+   frame.dispose();
+   new Converter1();
+ });
+ 
+    t.setRepeats(false);
+    t.start();
+    }
+
+    public static void main(String[] args) 
+    {
+       SwingUtilities.invokeLater(Converter::new);
+    }
+ }
+
+class Converter1
+{
+ JFrame frame;
+ JPanel button_panel;
+ 
+ public Converter1()
+{
+  frame = new JFrame("Converter");
+  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+  frame.getContentPane().setBackground(new Color(200, 207, 235));
+  frame.setLayout(new BorderLayout());
+
+  Font bf = new Font("Comfortaa", Font.PLAIN, 18);
+  Font vf = new Font("Comfortaa", Font.PLAIN, 24);
+  Font bf1 = new Font("Comic Sans MS", Font.PLAIN, 24);
+  Font tf = new Font("Comfortaa", Font.BOLD, 36);
+
+
+  JPanel tpanel = new JPanel();
+  tpanel.setLayout(new BoxLayout(tpanel, BoxLayout.Y_AXIS));
+  tpanel.setBackground(new Color(200, 207, 235));
+  
+
+  frame.add(tpanel, BorderLayout.NORTH);
+
+  button_panel = new JPanel(new GridLayout(0, 1, 10, 10));
+  JScrollPane sp = new JScrollPane(button_panel);
+  sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+  sp.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+  button_panel.setBackground(new Color(200, 207, 235));
+  JButton length_button = createButton("Length", bf1);
+  JButton mass_button = createButton("Mass", bf1);
+  JButton volume_button = createButton("Volume", bf1);
+  JButton energy_button = createButton("Energy", bf1);
+  JButton data_button = createButton("Data", bf1);
+  JButton time_button = createButton("Time", bf1);
+  JButton speed_button = createButton("Speed", bf1);
+  JButton power_button = createButton("Power", bf1);
+  JButton area_button = createButton("Area", bf1);
+        
+  button_panel.add(length_button);
+  button_panel.add(mass_button);
+  button_panel.add(volume_button);
+  button_panel.add(energy_button);
+  button_panel.add(data_button);
+  button_panel.add(time_button);
+  button_panel.add(speed_button);
+  button_panel.add(power_button);
+  button_panel.add(area_button);
+  frame.add(sp, BorderLayout.CENTER);
+  frame.setPreferredSize(new Dimension(500, 600));
+  frame.pack();
+  frame.setVisible(true);
+}
+
+private JButton createButton(String text, Font f) 
+{
+        JButton b = new JButton(text);
+        b.setBackground(new Color(155, 171, 217));
+        b.setFont(f);
+        b.addActionListener(e -> 
+       {
+            frame.setVisible(false);
+            if (text.equals("Length")) 
+            {
+                new length_converter();
+            } 
+            else if (text.equals("Volume"))
+            {
+                new volume_converter();
+            }
+            else if (text.equals("Mass"))
+            {
+                new mass_converter();
+            }
+            else if (text.equals("Energy"))
+            {
+                new energy_converter();
+            }
+            else if (text.equals("Data"))
+            {
+                new data_converter();
+            }
+            else if (text.equals("Time"))
+            {
+                new time_converter();
+            }
+            else if (text.equals("Speed"))
+            {
+                new speed_converter();
+            }
+            else if (text.equals("Power"))
+            {
+                new power_converter();
+            }
+            else if (text.equals("Area"))
+            {
+                new area_converter();
+            }
+            
+       });
+
+       Dimension bs = new Dimension(300, 90);
+       b.setPreferredSize(bs);
+       b.setMinimumSize(bs);
+       b.setMaximumSize(bs);
+
+       b.setHorizontalAlignment(SwingConstants.CENTER);
+       b.setVerticalAlignment(SwingConstants.CENTER);
+
+       Border eb = BorderFactory.createEmptyBorder();
+       int vi = (bs.height - b.getPreferredSize().height) / 2;
+       int hi = (bs.width - b.getPreferredSize().width) / 2;
+       Border cb = BorderFactory.createCompoundBorder(eb,
+            BorderFactory.createEmptyBorder(vi, hi, vi, hi));
+       b.setBorder(cb);
+        return b;
+}
+public static void main(String[] args) 
+{
+        SwingUtilities.invokeLater(() -> new Converter1());
+}
+}
+
+class CenteredComboBoxRenderer extends DefaultListCellRenderer 
+{
+    public CenteredComboBoxRenderer() 
+{
+        setHorizontalAlignment(SwingConstants.CENTER);
+ }
+
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) 
+{
+        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+        return this;
+ }
+}
+
+
+class Placeholder extends FocusAdapter {
+    private String pht;
+    private Font phf;
+    private boolean phs = true;
+
+    public Placeholder(String pht, Font phf) 
+    {
+        this.pht = pht;
+        this.phf = phf;
+    }
+
+    public void focusGained(FocusEvent e) 
+    {
+        if (phs) 
+        {
+            JTextField tf = (JTextField) e.getSource();
+            tf.setText("");
+            tf.setFont(phf.deriveFont(Font.PLAIN, 28));
+            phs = false;
+        }
+    }
+    public void focusLost(FocusEvent e) 
+    {
+        JTextField textField = (JTextField) e.getSource();
+        if (textField.getText().isEmpty()) 
+    {
+            textField.setText(pht);
+            textField.setFont(phf);
+            phs = true;
+    }
+  }
+}
+
+
+class ConverterBase implements ActionListener 
+{ 
+    JFrame frame;
+    JComboBox<String> source;
+    JComboBox<String> target;
+    JTextField s_field;
+    JTextField t_field;
+    JButton back;
+    DecimalFormat dec = new DecimalFormat("#.###");
+
+    String title;
+    Map<String, Double> conv_rates;
+    public ConverterBase(String title, Map<String, Double> conv_rates)
+  {
+     this.conv_rates = conv_rates;
+     
+     frame = new JFrame(title + " Converter");
+     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setBackground(new Color(200, 207, 235));
+        frame.setLayout(new BorderLayout());
+
+        JPanel bp = new JPanel(new BorderLayout());
+        bp.setBackground(new Color(200, 207, 235));
+
+        back = new JButton("Back \u25C4");
+        back.setFont(new Font("FontAwesome", Font.PLAIN, 17));
+        back.setBackground(new Color(189, 189, 235));
+        back.addActionListener(e -> {
+            frame.dispose();
+            new Converter1();
+        });
+        bp.add(back, BorderLayout.EAST);
+
+        frame.add(bp, BorderLayout.NORTH);
+
+
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+        content.setBackground(new Color(200, 207, 235));
+
+
+        JPanel source_panel = new JPanel(new BorderLayout());
+        source_panel.setBackground(new Color(200, 207, 235));
+        source_panel.setBorder(BorderFactory.createEmptyBorder(10, 0, 25, 0));
+        String pht1 = "Enter Source Value";
+        Font phf = new Font("Edu SA Beginner", Font.ITALIC, 30);
+        s_field = new JTextField(15);
+        s_field.setFont(new Font("Comfortaa", Font.PLAIN, 30));
+        s_field.setBackground(new Color(215, 217, 235));
+        s_field.setForeground(Color.GRAY);
+        s_field.getDocument().addDocumentListener(new ConvertListener());
+        s_field.addFocusListener(new Placeholder(pht1, phf));
+        s_field.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        s_field.setPreferredSize(new Dimension(400, 170));
+        s_field.setHorizontalAlignment(JTextField.RIGHT);
+        source_panel.add(s_field, BorderLayout.NORTH);
+         
+        
+        source = new JComboBox<>(conv_rates.keySet().toArray(new String[0]));
+        source.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+        source.setBackground(new Color(200, 207, 235));
+        source.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        source.addActionListener(this);
+        source.setRenderer(new CenteredComboBoxRenderer());
+        source.setPreferredSize(new Dimension(400, 40));
+        source_panel.add(source, BorderLayout.CENTER);
+ 
+        content.add(source_panel);
+      
+        JPanel target_panel = new JPanel(new BorderLayout());
+        target_panel.setBackground(new Color(200, 207, 235));
+        target_panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 25, 0));
+
+        t_field = new JTextField(15);
+        t_field.setFont(new Font("Comfortaa", Font.PLAIN, 30));
+        t_field.setBackground(new Color(215, 217, 235));
+        t_field.setForeground(Color.GRAY);
+        t_field.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        t_field.setEditable(false);
+        t_field.setPreferredSize(new Dimension(400, 170));
+        t_field.setHorizontalAlignment(JTextField.RIGHT);
+        target_panel.add(t_field, BorderLayout.NORTH);
+        
+        target = new JComboBox<>(conv_rates.keySet().toArray(new String[0]));
+        target.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+        target.setBackground(new Color(200, 207, 235));
+        target.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        target.addActionListener(this);
+        target.setPreferredSize(new Dimension(400, 40));
+        target.setRenderer(new CenteredComboBoxRenderer());
+        target_panel.add(target, BorderLayout.CENTER);
+
+        content.add(target_panel);
+
+        frame.add(content, BorderLayout.CENTER);
+        frame.setPreferredSize(new Dimension(500, 600));
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+private class ConvertListener implements DocumentListener 
+{
+        public void insertUpdate(DocumentEvent e) 
+        {
+            convert();
+        }
+
+        public void removeUpdate(DocumentEvent e) {
+            convert();
+        }
+
+        public void changedUpdate(DocumentEvent e) 
+        {
+            convert();
+        }
+}
+
+    private void convert()
+   {
+     String s_unit = (String) source.getSelectedItem();
+     String t_unit = (String) target.getSelectedItem();
+    
+     double s_val = 0.0;
+     try
+     {
+       s_val = Double.parseDouble(s_field.getText());
+     }
+     catch (Exception e)
+     {
+    
+     }
+     
+     double src_rate = conv_rates.get(s_unit);
+     double tgt_rate = conv_rates.get(t_unit);
+
+     double t_val = s_val * (tgt_rate / src_rate);
+     t_field.setText(dec.format(t_val));
+}
+  
+   public void actionPerformed(ActionEvent e)
+   {
+     convert();
+   }
+}
+
+class length_converter extends ConverterBase
+{
+    public length_converter() 
+  {
+     super("Length", len_conv_rates());
+  }
+     
+     private static Map<String, Double> len_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Meters", 1.0);
+        conv_rates.put("Centimeters", 100.0);
+        conv_rates.put("Kilometers", 0.001);
+        conv_rates.put("Feet", 3.2808);
+        conv_rates.put("Millimeters", 1000.0);
+        conv_rates.put("Yards", 1.094);
+        conv_rates.put("Inches", 39.37);
+        conv_rates.put("Miles", 0.0006213);
+
+        return conv_rates;
+        
+   }
+}
+
+
+class volume_converter extends ConverterBase
+{
+    public volume_converter() 
+  {
+     super("Volume", vol_conv_rates());
+  }
+     
+     private static Map<String, Double> vol_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Litres", 1.0);
+        conv_rates.put("Millilitres", 1000.0);
+        conv_rates.put("Cubic centimetres", 1000.0);
+        conv_rates.put("Cubic Meters", 0.001);
+        conv_rates.put("Pints(US)", 2.113);
+        conv_rates.put("Pints(UK)", 1.760);
+        conv_rates.put("Gallons(US)", 0.264);
+        conv_rates.put("Gallons(UK)", 0.220);
+
+        return conv_rates;
+        
+   }
+}
+
+
+class mass_converter extends ConverterBase
+{
+    public mass_converter() 
+  {
+     super("Mass", mass_conv_rates());
+  }
+     
+     private static Map<String, Double> mass_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Carats", 5000.0);
+        conv_rates.put("Milligrams", 1000000.0);
+        conv_rates.put("Decigrams", 10000.0);
+        conv_rates.put("Grams", 1000.0);
+        conv_rates.put("Kilograms", 1.0);
+        conv_rates.put("Metric Tonnes", 0.001);
+        conv_rates.put("Ounces", 35.274);
+        conv_rates.put("Pounds", 2.204);
+
+        return conv_rates;
+        
+   }
+}
+
+class energy_converter extends ConverterBase
+{
+    public energy_converter() 
+  {
+     super("Energy", energy_conv_rates());
+  }
+     
+     private static Map<String, Double> energy_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Electron Volts", 6.24e+18);
+        conv_rates.put("Joules", 1.0);
+        conv_rates.put("Kilojoules", 0.001);
+        conv_rates.put("Thermal Calories", 0.239);
+        conv_rates.put("Food Calories", 0.000239);
+        conv_rates.put("Foot-pounds", 0.737);  
+
+        return conv_rates;
+  }
+
+}
+
+class data_converter extends ConverterBase
+{
+    public data_converter() 
+  {
+     super("Data", data_conv_rates());
+  }
+     
+     private static Map<String, Double> data_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Bits", 8.0);
+        conv_rates.put("Bytes", 1.0);
+        conv_rates.put("Kilobytes", 0.001);
+        conv_rates.put("Megabytes", 1e-6);
+        conv_rates.put("Gigabytes", 1e-9);
+        conv_rates.put("Terabytes", 1e-12);
+        conv_rates.put("Petabytes", 1e-15);
+        conv_rates.put("Exabytes", 1e-18);
+        conv_rates.put("Zetabytes", 1e-21);
+        conv_rates.put("Yottabytes", 1e-24);  
+
+        return conv_rates;
+  }
+
+}
+
+class time_converter extends ConverterBase
+{
+    public time_converter() 
+  {
+     super("Time", time_conv_rates());
+  }
+     
+     private static Map<String, Double> time_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Microseconds", 31557600000000.0);
+        conv_rates.put("Milliseconds", 31557600000.0);
+        conv_rates.put("Seconds", 31557600.0);
+        conv_rates.put("Minutes", 525960.0);
+        conv_rates.put("Hours", 8766.0);
+        conv_rates.put("Days", 365.25);
+        conv_rates.put("Weeks", 52.178);
+        conv_rates.put("Years", 1.0);  
+
+        return conv_rates;
+  }
+
+}
+
+class speed_converter extends ConverterBase
+{
+    public speed_converter() 
+  {
+     super("Speed", speed_conv_rates());
+  }
+     
+     private static Map<String, Double> speed_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Centimetres per second (cm/s)", 100.0);
+        conv_rates.put("Metres per second (m/s)", 1.0);
+        conv_rates.put("Kilometres per hour (km/h)", 3.6);
+        conv_rates.put("Feet per second (f/s)", 3.280);
+        conv_rates.put("Miles per hour (mi/h)", 2.237);
+        conv_rates.put("Knots (kn)", 1.944);
+        conv_rates.put("Mach", 0.00294);  
+        conv_rates.put("Turtles", 11.19);
+
+        return conv_rates;
+  }
+
+}
+
+class power_converter extends ConverterBase
+{
+    public power_converter() 
+  {
+     super("Power", power_conv_rates());
+  }
+     
+     private static Map<String, Double> power_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Watts", 1000.0);
+        conv_rates.put("Kilowatts", 1.0);
+        conv_rates.put("Horsepower (US)", 1.341);
+        conv_rates.put("BTUs/minute", 56.87);
+
+        return conv_rates;
+  }
+
+}
+
+class area_converter extends ConverterBase
+{
+    public area_converter() 
+  {
+     super("Area", area_conv_rates());
+  }
+     
+     private static Map<String, Double> area_conv_rates()
+  {
+        Map<String, Double> conv_rates = new HashMap<>();
+        conv_rates.put("Square centimetres", 10000000000.0);
+        conv_rates.put("Square metres", 1000000.0);
+        conv_rates.put("Hectares", 100.0);
+        conv_rates.put("Square Kilometres", 1.0);
+        conv_rates.put("Square Inches", 1550003100.0);
+        conv_rates.put("Square Feet", 10763910.0);
+        conv_rates.put("Acres", 247.105);
+        conv_rates.put("Square Miles", 0.386);
+
+        return conv_rates;
+  }
+
+}
+
